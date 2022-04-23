@@ -1,4 +1,4 @@
-function particles = PF_StateFunction(prevParticles, parameters, input, day, config)
+function particles = PF_StateFunction(prevParticles, parameters, input, day, ProcessNoise)
 
 a = parameters.a;
 b = parameters.b;
@@ -32,7 +32,7 @@ end
 % particles = particles + processNoise * randn(size(particles));
 
 % New noise method
-processNoise = config.ProcessNoise * eye(numberOfStates) ;
+processNoise = ProcessNoise * eye(numberOfStates) ;
 particles = particles .* (ones(size(particles)) + processNoise * randn(size(particles)));
 
 for ii = 1:numberOfParticles

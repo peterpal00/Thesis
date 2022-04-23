@@ -1,11 +1,11 @@
-function likelihood = PF_MeasurementLikelihood(predictedParticles, measurement, config)
+function likelihood = PF_MeasurementLikelihood(predictedParticles, measurement, MeasurementNoise)
 
 numberOfMeasurements = 1;
 
 % Assume that measurements are subject to Gaussian distributed noise with
 % variance 0.016
 % Specify noise as covariance matrix
-var = config.MeasurementNoise;
+var = MeasurementNoise;
 measurementNoise = var * eye(numberOfMeasurements);
 
 % The measurement contains the first state variable. Get the first state of

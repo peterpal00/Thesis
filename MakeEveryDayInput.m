@@ -1,6 +1,6 @@
 function [everyDayInput, lastDayOfTherapy] = MakeEveryDayInput(mouse)
 
-fprintf('fill the missing experiment days \n')
+%fprintf('fill the missing experiment days \n')
 
 % Makes a vector(everyDayInput) filled with every daily dose(all the days also where was no
 % measurement)

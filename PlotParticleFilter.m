@@ -1,22 +1,15 @@
-function PlotParticleFilter(estimatedState, mouse, tOut, xOut, config)
+function PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, ProcessNoise, MeasurementNoise, ResamplingPolicy, folder)
     %% plotting particled states
     
 fprintf('\n plotting PF \n')
-%     
-%     figure();
-%     % pf_States = plot(mouse.Day, estimatedState(:,1) + estimatedState(:,2));
-%     plot(mouse.Day(2:end), estimatedState(:,2))
-%     hold on
-%     
-%     hold off
 
 figure();
 
-txt1 = sprintf('Mouse ID: %d', config.mouseID);
-txt2 = sprintf('Number of Particles: %d', config.numParticles);
-txt3 = sprintf('Process noise: %.3g', config.ProcessNoise);
-txt4 = sprintf('Measurement noise: %.3g', config.MeasurementNoise);
-txt5 = sprintf('Resampling policy: %s', config.ResamplingPolicy);
+txt1 = sprintf('Mouse ID: %d', mouseID);
+txt2 = sprintf('Number of Particles: %d', numParticles);
+txt3 = sprintf('Process noise: %.3g', ProcessNoise);
+txt4 = sprintf('Measurement noise: %.3g', MeasurementNoise);
+txt5 = sprintf('Resampling policy: %s', ResamplingPolicy);
 %txt6 = sprintf('Mouse ID: %f', config.mouseID);
 txt = {txt1, txt2, txt3, txt4, txt5};
 
@@ -31,10 +24,20 @@ pf = plot(mouse.Day(2:end), estimatedState(:,1) + estimatedState(:,2)); % miert 
 hold on
 sum = plot(tOut,xOut(:,1) +  xOut(:,2));
 oriSum = scatter(mouse.Day, mouse.Tumour_Volume);
-chem = plot(tOut, )
+%chem = plot(tOut, )
 legend([pf, sum, oriSum], 'ParticeFilter', 'Sum tumour', 'Actual Tumour Vol.');
+figur = gcf;
 
 
+filename = sprintf('m%dnpf%dpn%.3gmn%.3g.png', mouseID, numParticles,ProcessNoise, MeasurementNoise);
+resultFolder = 'Results';
+newFolder = fullfile(folder.currentFolder, resultFolder, folder.date);
+if ~exist(newFolder, 'dir')
+    mkdir(newFolder);
+end
+
+savePath = fullfile(newFolder, filename);
+exportgraphics(figur, savePath, 'Resolution', 300);
 
 hold off
 

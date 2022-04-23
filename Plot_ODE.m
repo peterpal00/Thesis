@@ -1,9 +1,9 @@
 function [] = Plot_ODE(tOut, xOut, mouse)
 %% plot simu
 
-fprintf('plotting ode45 data \n')
+%fprintf('plotting ode45 data \n')
 
-figure();
+figure("visible", "off");
 l = plot(tOut,xOut(:,1));
 hold on
 d = plot(tOut,xOut(:,2));

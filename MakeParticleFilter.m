@@ -1,7 +1,7 @@
 function [pf] = MakeParticleFilter(x00, numParticles)
 %% Creating particle filter - NEW METHOD
 
-fprintf('creating particle filter \n')
+%fprintf('creating particle filter \n')
 
 pf = particleFilter;
 

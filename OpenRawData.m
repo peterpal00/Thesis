@@ -1,7 +1,7 @@
 function [rawDays,rawDoses, rawTumourVolumes] = OpenRawData()
 %% open measurements (2).mat file
 
-fprintf('load experiment data \n')
+%fprintf('load experiment data \n')
 
 filename = 'measurements (2).mat';
 measurements = load(filename);

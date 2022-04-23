@@ -2,7 +2,7 @@ function [tOut, xOut] = ODE_Simulation(parameters, x0, lastDayOfTherapy, everyDa
 
     %% simulation
     
-    fprintf('ode45 simulation \n')
+    %fprintf('ode45 simulation \n')
     
     a = parameters.a;
     b = parameters.b;
