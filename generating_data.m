@@ -39,7 +39,7 @@ for mouseID_iter = 1:length(mouseID_Range)
     
     %% make the timeline and input of the simulation
     
-    [everyDayInput, lastDayOfTherapy] = MakeEveryDayInput(mouse);
+    [everyDayInput, lastDayOfTherapy, numDays] = MakeEveryDayInput(mouse);
     
     %% simulation
     
@@ -66,7 +66,7 @@ for mouseID_iter = 1:length(mouseID_Range)
 
             %% looping - NEW METHOD
 
-            [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, everyDayInput, mouse, processNoise, measurementNoise);
+            [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, numDays, everyDayInput, mouse, processNoise, measurementNoise);
 
             %% get save Path
 
@@ -80,7 +80,7 @@ for mouseID_iter = 1:length(mouseID_Range)
             %% save environmental variables
 
             file = savePath + ".mat";
-            parsave(file, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, tOut, xOut, pf, params, lastDayOfTherapy, everyDayInput, mouse, rawDays, rawDoses, rawTumourVolumes);
+            parsave(file, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, tOut, xOut, pf, params, lastDayOfTherapy, everyDayInput, mouse, rawDays, rawDoses, rawTumourVolumes, predictedState, estimatedState, predictedCovariance, estimatedCovariance);
 
 
         end

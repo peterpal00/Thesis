@@ -1,20 +1,24 @@
-function [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, everyDayInput, mouse, processNoise, measurementNoise)
+function [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, numDays, everyDayInput, mouse, processNoise, measurementNoise)
     %% looping - NEW METHOD
     
     %fprintf('looping particle filter \n')
     
     % OK: correct es a measurement lepeseket csak a mouse.Days napokon elvegezni.
     
-    predictedState = zeros(length(lastDayOfTherapy),4);
-    estimatedState = zeros(length(lastDayOfTherapy),4);
+    predictedState = zeros(lastDayOfTherapy,4);
+    predictedCovariance = cell(lastDayOfTherapy,1);
+
+    estimatedState = zeros(numDays,4);
+    estimatedCovariance = cell(numDays,4);
+
     noise = 0.1;
     
 txt = fprintf('');
 
     j = 1;
-    for i = 1:length(everyDayInput) % OK: itt is everyDayInput-ra csere
+    for i = 1:lastDayOfTherapy % OK: itt is everyDayInput-ra csere
         % Predict next position. Resample particles if necessary.
-        [predictedState(i,:),predictedCovariance] = predict(pf, params, everyDayInput(i), i, processNoise); % OK: mouse.Dose helyett everyDayInput mert 0 ertek kell neki amikor nincs meres
+        [predictedState(i,:),predictedCovariance{i}] = predict(pf, params, everyDayInput(i), i, processNoise); % OK: mouse.Dose helyett everyDayInput mert 0 ertek kell neki amikor nincs meres
         
         
         if(ismember(i, mouse.Day))
@@ -23,7 +27,7 @@ txt = fprintf('');
             measurement(j,:) = mouse.Tumour_Volume(j);% + noise*(rand([1 2])-noise/2); %%% OK: HIBA: OUTPUT helyett INPUT van!!!
             % Correct position based on the given measurement to get best estimation.
             % Actual dot position is not used. Store corrected position in data array.
-            [estimatedState(j,:),estimatedCovariance] = correct(pf, measurement(j), measurementNoise);
+            [estimatedState(j,:),estimatedCovariance{j}] = correct(pf, measurement(j), measurementNoise);
             j = j + 1;
         end
         
