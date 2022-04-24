@@ -1,8 +1,8 @@
 %% config main parameters
 
-particle_Range = 1:1:3;
-mouseID_Range = 1:5;
-processNoise_Range = 0.1:0.1:0.3;
+particle_Range = 50:100:1550;
+mouseID_Range = 1:7;
+processNoise_Range = 0.025:0.025:0.3;
 
 all_cases = length(particle_Range) * length(mouseID_Range) * length(processNoise_Range);
 numPassedCases = 0;

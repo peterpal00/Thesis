@@ -16,7 +16,8 @@ classdef PoolWaitbar < handle
     methods (Access = private)
         function localIncrement(obj)
             obj.Count = 1 + obj.Count;
-            waitbar(obj.Count / obj.N, obj.ClientHandle);
+            updated_text = sprintf("Passed cases: %d/%d (%d%%)",obj.Count, obj.N, round(obj.Count / obj.N * 100));
+            waitbar(obj.Count / obj.N, obj.ClientHandle, updated_text);
         end
     end
     methods
