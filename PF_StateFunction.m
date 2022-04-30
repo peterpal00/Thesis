@@ -15,7 +15,7 @@ bk = parameters.bk;
 
 particles = zeros([numberOfStates numberOfParticles]);
 
-parfor kk=1:numberOfParticles
+for kk=1:numberOfParticles
     [t,x] = ode45(@(t,x)Func_tum_V4(x,a,b,c,n,k1,k2,bk,ED50,w, input),[day day+1],[prevParticles(1,kk) prevParticles(2,kk) prevParticles(3, kk) prevParticles(4, kk)]);
     particle = x(end,:);
     particle = particle';

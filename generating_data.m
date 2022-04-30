@@ -82,6 +82,8 @@ for mouseID_iter = 1:length(mouseID_Range)
                     measurementNoise = measurementNoise_Range(measurementNoise_iter);
                     %fprintf('LOOP ERROR: m%dnpf%dpnT%.3gpnD%.3gmn%.3g', mouseID, numParticles,processNoise_Tumour, processNoise_Drug, measurementNoise')
                     %% looping - NEW METHOD
+
+%                     [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, numDays, everyDayInput, mouse, processNoise_Tumour, processNoise_Drug, measurementNoise);
                     try
                         [predictedState, estimatedState, predictedCovariance, estimatedCovariance] = LoopParticleFilter(pf, params, lastDayOfTherapy, numDays, everyDayInput, mouse, processNoise_Tumour, processNoise_Drug, measurementNoise);
                     catch
@@ -100,8 +102,11 @@ for mouseID_iter = 1:length(mouseID_Range)
                     %% save environmental variables
         
                     file = savePath + ".mat";
-                    parsave(file, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise, tOut, xOut, pf, params, lastDayOfTherapy, everyDayInput, mouse, rawDays, rawDoses, rawTumourVolumes, predictedState, estimatedState, predictedCovariance, estimatedCovariance);
-                    
+                    try
+                        parsave(file, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise, tOut, xOut, pf, params, lastDayOfTherapy, everyDayInput, mouse, rawDays, rawDoses, rawTumourVolumes, predictedState, estimatedState, predictedCovariance, estimatedCovariance);
+                    catch
+                        fprintf(fprintf('PARSAVE ERROR: m%dnpf%dpnT%.3gpnD%.3gmn%.3g', mouseID, numParticles,processNoise_Tumour, processNoise_Drug, measurementNoise'))
+                    end
 
                 end
 
