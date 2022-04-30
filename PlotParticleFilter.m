@@ -20,7 +20,8 @@ annotation('textbox',dim,'String',txt,'FitBoxToText','on', 'FontSize', 7);
 
 
 
-pf = plot(mouse.Day(2:end), estimatedState(:,1) + estimatedState(:,2)); % miert a masodiktol plottol?
+% pf = plot(mouse.Day(2:end), estimatedState(:,1) + estimatedState(:,2)); % miert a masodiktol plottol?
+pf = plot(mouse.Day, estimatedState(:,1) + estimatedState(:,2));
 hold on
 sum = plot(tOut,xOut(:,1) +  xOut(:,2));
 oriSum = scatter(mouse.Day, mouse.Tumour_Volume);
@@ -30,7 +31,7 @@ figur = gcf;
 
 
 filename = sprintf('m%dnpf%dpn%.3gmn%.3g.png', mouseID, numParticles,ProcessNoise, MeasurementNoise);
-resultFolder = 'Results';
+resultFolder = 'Analysed_datas';
 newFolder = fullfile(folder.currentFolder, resultFolder, folder.date);
 if ~exist(newFolder, 'dir')
     mkdir(newFolder);
