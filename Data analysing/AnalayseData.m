@@ -37,9 +37,10 @@ function [] = AnalayseData(filename, folder)
     rmse_DrugConcPeriferal_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE, estimatedState(:,4), mouse.Day, xOut(:,4), tOut);
     
 
+
     %% Plot
 
-    PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, folder);
+    %PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, folder);
     
     fprintf("hello");
 
