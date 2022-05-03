@@ -16,6 +16,11 @@ processNoise_Drug_Range2 = 1.5:0.5:3;
 processNoise_Drug_Range = [processNoise_Drug_Range1, processNoise_Drug_Range2];
 
 measurementNoise_Range = 0.002:0.005:0.032; %0.016;
+% particle_Range = 500;
+% mouseID_Range = 2;
+% processNoise_Tumour_Range = 100;
+% processNoise_Drug_Range = 1.5;
+% measurementNoise_Range = 0.016;
 
 all_cases = length(particle_Range) * length(mouseID_Range) * length(processNoise_Tumour_Range) * length(processNoise_Drug_Range) * length(measurementNoise_Range);
 numPassedCases = 0;
@@ -59,7 +64,7 @@ for mouseID_iter = 1:length(mouseID_Range)
     
     %Plot_ODE(tOut, xOut, mouse);
 
-    for particleNum_iter = 1:length(particle_Range)
+    parfor particleNum_iter = 1:length(particle_Range)
 
         
 
@@ -95,7 +100,7 @@ for mouseID_iter = 1:length(mouseID_Range)
                     savePath = getSavePathResult(resultFolder, folder, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise);
         
                     %% plotting particled states
-                    %PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, savePath);
+                    %PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise, savePath);
         
                     increment(pw);
         
@@ -126,8 +131,8 @@ for mouseID_iter = 1:length(mouseID_Range)
 end
 rangefilename = 'ranges.mat';
 rangefile = fullfile(resultFolder,folder.date, rangefilename);
-parsave(rangefile, particle_Range, tEnd, mouseID_Range, processNoise_Tumour_Range, processNoise_Drug_Range, measurementNoise_Range);
 tEnd = toc(tStart);
+parsave(rangefile, particle_Range, tEnd, mouseID_Range, processNoise_Tumour_Range, processNoise_Drug_Range, measurementNoise_Range);
 tEnd
 
 

@@ -10,7 +10,7 @@ function [predictedState, estimatedState, predictedCovariance, estimatedCovarian
 
     estimatedState = zeros(numDays,4);
     estimatedCovariance = cell(numDays,4);
-    measurement = zeros(length(mouse.Day));
+    %measurement = zeros(length(mouse.Day), 1);
 
     %noise = 0.1;
     
@@ -27,7 +27,7 @@ function [predictedState, estimatedState, predictedCovariance, estimatedCovarian
             %measurement(j,:) = mouse.Tumour_Volume(j);% + noise*(rand([1 2])-noise/2); %%% OK: HIBA: OUTPUT helyett INPUT van!!!
             % Correct position based on the given measurement to get best estimation.
             % Actual dot position is not used. Store corrected position in data array.
-            [estimatedState(j,:),estimatedCovariance{j}] = correct(pf, measurement(j), measurementNoise);
+            [estimatedState(j,:),estimatedCovariance{j}] = correct(pf, mouse.Tumour_Volume(j), measurementNoise);
             j = j + 1;
             ifThisFirstLoop = false;
         end

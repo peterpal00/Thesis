@@ -1,4 +1,4 @@
-function PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, ProcessNoise, MeasurementNoise, ResamplingPolicy, folder)
+function PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, MeasurementNoise, ResamplingPolicy, folder)
     %% plotting particled states
     
 fprintf('\n plotting PF \n')
@@ -7,9 +7,9 @@ figure();
 
 txt1 = sprintf('Mouse ID: %d', mouseID);
 txt2 = sprintf('Number of Particles: %d', numParticles);
-txt3 = sprintf('Process noise: %.3g', ProcessNoise);
-txt4 = sprintf('Measurement noise: %.3g', MeasurementNoise);
-txt5 = sprintf('Resampling policy: %s', ResamplingPolicy);
+txt3 = sprintf('Process noise_Tumour: %.3g', processNoise_Tumour);
+txt4 = sprintf('Process noise_Drug: %.3g', processNoise_Drug);
+txt5 = sprintf('Measurement noise: %.3g', MeasurementNoise);
 %txt6 = sprintf('Mouse ID: %f', config.mouseID);
 txt = {txt1, txt2, txt3, txt4, txt5};
 
@@ -30,15 +30,15 @@ legend([pf, sum, oriSum], 'ParticeFilter', 'Sum tumour', 'Actual Tumour Vol.');
 figur = gcf;
 
 
-filename = sprintf('m%dnpf%dpn%.3gmn%.3g.png', mouseID, numParticles,ProcessNoise, MeasurementNoise);
-resultFolder = 'Analysed_datas';
-newFolder = fullfile(folder.currentFolder, resultFolder, folder.date);
-if ~exist(newFolder, 'dir')
-    mkdir(newFolder);
-end
-
-savePath = fullfile(newFolder, filename);
-exportgraphics(figur, savePath, 'Resolution', 300);
+% filename = sprintf('m%dnpf%dpn%.3gmn%.3g.png', mouseID, numParticles,ProcessNoise, MeasurementNoise);
+% resultFolder = 'Analysed_datas';
+% newFolder = fullfile(folder.currentFolder, resultFolder, folder.date);
+% if ~exist(newFolder, 'dir')
+%     mkdir(newFolder);
+% end
+% 
+% savePath = fullfile(newFolder, filename);
+% exportgraphics(figur, savePath, 'Resolution', 300);
 
 hold off
 
