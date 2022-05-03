@@ -1,4 +1,4 @@
-function [] = AnalayseData(filename, folder)
+function [rmse_TumourVolume_MODELvMEASUR, rmse_TumourVolume_PFvMODEL, rmse_TumourVolume_PFvMEASUR, rmse_TumourVolumeAilve_PFvMODEL, rmse_DrugConcTumour_PFvMODEL, rmse_DrugConcPeriferal_PFvMODEL] = AnalayseData(filename, folder)
     
 
 
@@ -22,6 +22,7 @@ function [] = AnalayseData(filename, folder)
     rmse_TumourVolume_PFvMEASUR = ExecuteFuncOnActualAndLongerVector(@RMSE, mouse.Tumour_Volume, mouse.Day, estimatedState(:,1) + estimatedState(:,2), mouse.Day);
     
     %% RMSE: Tumour Volume alive | pf vs. modell
+    % DEAD???
 
     rmse_TumourVolumeAilve_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE,  estimatedState(:,1), mouse.Day, xOut(:,1), tOut);
 
@@ -42,7 +43,7 @@ function [] = AnalayseData(filename, folder)
 
     %PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise, measurementNoise, ResamplingPolicy, folder);
     
-    fprintf("hello");
+    %fprintf("hello");
 
     
 end
