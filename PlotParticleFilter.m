@@ -1,4 +1,4 @@
-function PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, MeasurementNoise, ResamplingPolicy, folder)
+function PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, MeasurementNoise, folder)
     %% plotting particled states
     
 fprintf('\n plotting PF \n')
@@ -7,8 +7,8 @@ figure();
 
 txt1 = sprintf('Mouse ID: %d', mouseID);
 txt2 = sprintf('Number of Particles: %d', numParticles);
-txt3 = sprintf('Process noise_Tumour: %.3g', processNoise_Tumour);
-txt4 = sprintf('Process noise_Drug: %.3g', processNoise_Drug);
+txt3 = sprintf('Process noise Tumour: %.3g', processNoise_Tumour);
+txt4 = sprintf('Process noise Drug: %.3g', processNoise_Drug);
 txt5 = sprintf('Measurement noise: %.3g', MeasurementNoise);
 %txt6 = sprintf('Mouse ID: %f', config.mouseID);
 txt = {txt1, txt2, txt3, txt4, txt5};
@@ -22,23 +22,25 @@ annotation('textbox',dim,'String',txt,'FitBoxToText','on', 'FontSize', 7);
 
 % pf = plot(mouse.Day(2:end), estimatedState(:,1) + estimatedState(:,2)); % miert a masodiktol plottol?
 pf = plot(mouse.Day, estimatedState(:,1) + estimatedState(:,2));
+xlabel('Experiment days') 
+ylabel('Tumour volume')
 hold on
 sum = plot(tOut,xOut(:,1) +  xOut(:,2));
 oriSum = scatter(mouse.Day, mouse.Tumour_Volume);
 %chem = plot(tOut, )
-legend([pf, sum, oriSum], 'ParticeFilter', 'Sum tumour', 'Actual Tumour Vol.');
+legend([pf, sum, oriSum], 'ParticeFilter', 'ODE45 model', 'Actual Tumour Vol.');
 figur = gcf;
 
 
-% filename = sprintf('m%dnpf%dpn%.3gmn%.3g.png', mouseID, numParticles,ProcessNoise, MeasurementNoise);
-% resultFolder = 'Analysed_datas';
+filename = sprintf('m%dnpf%dpnT%.3gpnD%.3gmn%.3g.png', mouseID, numParticles, processNoise_Tumour, processNoise_Drug, MeasurementNoise);
+resultFolder = 'Analysed_datas';
 % newFolder = fullfile(folder.currentFolder, resultFolder, folder.date);
 % if ~exist(newFolder, 'dir')
 %     mkdir(newFolder);
 % end
-% 
+
 % savePath = fullfile(newFolder, filename);
-% exportgraphics(figur, savePath, 'Resolution', 300);
+exportgraphics(figur, 'graph.png', 'Resolution', 300);
 
 hold off
 

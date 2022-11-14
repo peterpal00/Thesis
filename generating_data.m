@@ -1,26 +1,28 @@
 %% config main parameters
 
-particle_Range1 = 50:50:200;
-particle_Range2 = 300:500:2000;
-particle_Range = [20, particle_Range1, particle_Range2];
+% particle_Range1 = 50:50:200;
+% particle_Range2 = 300:500:2000;
+% particle_Range = [20, particle_Range1, particle_Range2];
+% 
+% mouseID_Range = 1:7;
+% 
+% processNoise_Tumour_Range1 = 1:2:9;
+% processNoise_Tumour_Range2 = 10:20:100;
+% processNoise_Tumour_Range3 = 100:30:200;
+% processNoise_Tumour_Range = [processNoise_Tumour_Range1, processNoise_Tumour_Range2, processNoise_Tumour_Range3];
+% 
+% processNoise_Drug_Range1 = 0.01:0.03:0.15;
+% processNoise_Drug_Range2 = 1.5:0.5:3;
+% processNoise_Drug_Range = [processNoise_Drug_Range1, processNoise_Drug_Range2];
+% 
+% measurementNoise_Range = 0.002:0.005:0.032; %0.016;
 
-mouseID_Range = 1:7;
-
-processNoise_Tumour_Range1 = 1:2:9;
-processNoise_Tumour_Range2 = 10:20:100;
-processNoise_Tumour_Range3 = 100:30:200;
-processNoise_Tumour_Range = [processNoise_Tumour_Range1, processNoise_Tumour_Range2, processNoise_Tumour_Range3];
-
-processNoise_Drug_Range1 = 0.01:0.03:0.15;
-processNoise_Drug_Range2 = 1.5:0.5:3;
-processNoise_Drug_Range = [processNoise_Drug_Range1, processNoise_Drug_Range2];
-
-measurementNoise_Range = 0.002:0.005:0.032; %0.016;
-% particle_Range = 500;
-% mouseID_Range = 2;
-% processNoise_Tumour_Range = 100;
-% processNoise_Drug_Range = 1.5;
-% measurementNoise_Range = 0.016;
+particle_Range = 50 %[10 30 50 150 800 2000];
+mouseID_Range = 2;
+processNoise_Tumour_Range =  30 %[1 5 20 50 150 200];
+processNoise_Drug_Range = 0.01 %[0.01 1 3 50 150 500] %[0.01 0.1 0.7 1.5 3 15];
+%measurementNoise_Range =   [1 2 3 4 5 6]  %  %0.016;
+measurementNoise_Range = [0.005 0.01 0.015 0.02 0.025 50];
 
 all_cases = length(particle_Range) * length(mouseID_Range) * length(processNoise_Tumour_Range) * length(processNoise_Drug_Range) * length(measurementNoise_Range);
 numPassedCases = 0;
@@ -63,8 +65,9 @@ for mouseID_iter = 1:length(mouseID_Range)
     %% plot simu
     
     %Plot_ODE(tOut, xOut, mouse);
+    t = tiledlayout(3,2);
 
-    parfor particleNum_iter = 1:length(particle_Range)
+    for particleNum_iter = 1:length(particle_Range)
 
         
 
@@ -100,7 +103,7 @@ for mouseID_iter = 1:length(mouseID_Range)
                     savePath = getSavePathResult(resultFolder, folder, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise);
         
                     %% plotting particled states
-                    %PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise, savePath);
+%                     PlotParticleFilter(estimatedState, mouse, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise, savePath);
         
                     increment(pw);
         
@@ -113,6 +116,12 @@ for mouseID_iter = 1:length(mouseID_Range)
                         fprintf(fprintf('PARSAVE ERROR: m%dnpf%dpnT%.3gpnD%.3gmn%.3g', mouseID, numParticles,processNoise_Tumour, processNoise_Drug, measurementNoise'))
                     end
 
+                    
+
+                    nexttile
+                    NewPlot(mouse, estimatedState, tOut, xOut, mouseID, numParticles, processNoise_Tumour, processNoise_Drug, measurementNoise);
+
+
                 end
 
             end
@@ -120,6 +129,8 @@ for mouseID_iter = 1:length(mouseID_Range)
         end
 
     end
+    exportgraphics(gcf, 'graph.png', 'Resolution', 300);
+
     %% sign that mouse is over
     overfilepath = fullfile(folder.currentFolder, resultFolder, folder.date);
     overf = sprintf('%d_over.mat', mouseID);
