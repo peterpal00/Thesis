@@ -1,21 +1,25 @@
-function [rmse_TumourVolume_MODELvMEASUR, rmse_TumourVolume_PFvMODEL, rmse_TumourVolume_PFvMEASUR, rmse_TumourVolumeAilve_PFvMODEL, rmse_DrugConcTumour_PFvMODEL, rmse_DrugConcPeriferal_PFvMODEL] = AnalayseData(filename, folder)
+function [rmse_TumourVolume_PFvMEASUR, values] = AnalayseData(filename)
     
 
 
     %% Load given file
 
     load(filename);
+    values.numParticles = numParticles;
+    values.processNoise_Drug = processNoise_Drug;
+    values.processNoise_Tumour = processNoise_Tumour;
+    values.measurementNoise = measurementNoise;
 
     %%  RMSE: Tumour Volume | modelled data vs. measurements
 
 %     modelledTumourVolume_partial = MakeShortenedVector(mouse.Day, xOut(:,1) + xOut(:,2), tOut);
 %     rmse_TumourVolume_MODELLED = RMSE(mouse.Tumour_Volume, modelledTumourVolume_partial);
-    rmse_TumourVolume_MODELvMEASUR = ExecuteFuncOnActualAndLongerVector(@RMSE, mouse.Tumour_Volume, mouse.Day, xOut(:,1) + xOut(:,2), tOut);
+    %rmse_TumourVolume_MODELvMEASUR = ExecuteFuncOnActualAndLongerVector(@RMSE, mouse.Tumour_Volume, mouse.Day, xOut(:,1) + xOut(:,2), tOut);
 
     %% RMSE: Tumour Volume | pf vs. modell
     
     PF_timeline = 1:lastDayOfTherapy;
-    rmse_TumourVolume_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE,  estimatedState(:,1) + estimatedState(:,2), mouse.Day, xOut(:,1) + xOut(:,2), tOut);
+    %rmse_TumourVolume_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE,  estimatedState(:,1) + estimatedState(:,2), mouse.Day, xOut(:,1) + xOut(:,2), tOut);
 
     %% RMSE: Tumour Volume | pf vs. measurements
 
@@ -24,18 +28,18 @@ function [rmse_TumourVolume_MODELvMEASUR, rmse_TumourVolume_PFvMODEL, rmse_Tumou
     %% RMSE: Tumour Volume alive | pf vs. modell
     % DEAD???
 
-    rmse_TumourVolumeAilve_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE,  estimatedState(:,1), mouse.Day, xOut(:,1), tOut);
+    %rmse_TumourVolumeAilve_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE,  estimatedState(:,1), mouse.Day, xOut(:,1), tOut);
 
     %% RMSE: Drug Conc in tumour | pf vs. modell 
     %NEM BIZTOS HOGY A BELSO KONCI
 
-    rmse_DrugConcTumour_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE, estimatedState(:,3), mouse.Day, xOut(:,3), tOut);
+    %rmse_DrugConcTumour_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE, estimatedState(:,3), mouse.Day, xOut(:,3), tOut);
 
 
     %% RMSE: Drug Conc perfiferal | pf vs. modell
     %NEM BIZTOS HOGY A KULSO KONCI
 
-    rmse_DrugConcPeriferal_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE, estimatedState(:,4), mouse.Day, xOut(:,4), tOut);
+    %rmse_DrugConcPeriferal_PFvMODEL = ExecuteFuncOnActualAndLongerVector(@RMSE, estimatedState(:,4), mouse.Day, xOut(:,4), tOut);
     
 
 
